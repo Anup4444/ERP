@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %}
+
+{% block title %} sub category List{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#"> Sub Category</a></li>
+                            <li class="active">List</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title"> Sub Category List </h4>
+            </div>
+            <div class="card-body--">
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="serial">ID</th>
+                                <th> Category Title</th>
+
+
+                                <th> SUb Category Title</th>
+                                
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if sub_category %}
+                            {% for sub_category in sub_category %}
+                            <tr>
+                                <td class="serial">{{ forloop.counter }}</td>
+                                <td>{{ sub_category.category }}</td>
+                                <td>{{ sub_category.sub_category }}</td>
+                                <td>
+                                <a href="{% url 'update-sub-category' sub_category.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{% url 'delete-sub-category' sub_category.pk %}" class="d-inline" method="POST">{% csrf_token %}<input type="submit" class="btn btn-danger btn-sm" value="Delete"></form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                                <tr><td>No Sub Category Data</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+        </div> <!-- /.card -->
+    </div>  <!-- /.col-lg-8 -->
+
+    
+</div>
+{% endblock content %}

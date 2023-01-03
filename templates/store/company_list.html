@@ -1,0 +1,85 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Company List{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Company</a></li>
+                            <li class="active">List</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Company List </h4>
+            </div>
+            <div class="card-body--">
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Code</th>
+                                <th>Company Name</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if company %}
+                            {% for company in company %}
+                            <tr>
+                                <td>CH{{forloop.counter}}</td>
+                                <td>Co-{{company.code}}</td>
+                                <td>{{ company.name }}</td>
+                                <td>{{ company.address }}</td>
+                                <td>{{ company.email }}</td>
+                                <td>{{company.created_date }}</td>
+                                <td>
+                                    
+                                    <a href="{% url 'update-company' company.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                    <form action="{% url 'delete-company' company.pk %}" class="d-inline" method="POST">{% csrf_token %}<input type="submit" class="btn btn-danger btn-sm" value="Delete"></form>
+                                    {% comment %} <a href="/delete-company/{{company.pk}}">Delete</a> {% endcomment %}
+                                </td>
+                               <td> <a href="#switchEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="edit"></i>Switch</a></td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                                <tr><td>No Company Data</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+        </div> <!-- /.card -->
+    </div>  <!-- /.col-lg-8 -->
+
+    
+</div>
+{% endblock content %}
